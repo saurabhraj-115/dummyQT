@@ -1,5 +1,6 @@
 #include <QCoreApplication>
 #include <myserver.h>
+#include <QIODevice>
 
 int main(int argc, char *argv[])
 {
