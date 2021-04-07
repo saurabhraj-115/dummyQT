@@ -1,13 +1,14 @@
 #include "myserver.h"
 #include <myserver.h>
 #include <QTextStream>
+#include <QIODevice>
 
 MyServer::MyServer(QObject *parent) : QObject(parent)
 {
 
     server = new QTcpServer(this);
     connect(server, SIGNAL(newConnection()), this, SLOT(newConnection() )  );
-    connect(socket, SIGNAL(readyRead() ) , this, SLOT(onReadyRead() ) );
+    connect(this, SIGNAL(QIODevice::readyRead() ) , this, SLOT(onReadyRead() ) );
     if(!server->listen(QHostAddress::Any , 3232) ){
         qDebug()<<"Server could not start";
     }
@@ -18,7 +19,7 @@ MyServer::MyServer(QObject *parent) : QObject(parent)
 
 void MyServer::newConnection(){
 
-    QTcpSocket *socket = server->nextPendingConnection();
+    socket = server->nextPendingConnection();
 
     socket->write("hello client\r\n");
     socket->flush();

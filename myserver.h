@@ -5,6 +5,8 @@
 #include <QDebug>
 #include <QTcpServer>
 #include <QTcpSocket>
+#include <QAbstractSocket>
+#include <QIODevice>
 
 class MyServer : public QObject
 {
@@ -13,6 +15,7 @@ public:
     explicit MyServer(QObject *parent = 0);
 
 signals:
+  void readyRead();
 
 
 public slots:
@@ -23,7 +26,7 @@ public slots:
 
 private:
     QTcpServer *server;
-    QTcpSocket *socket;
+    QAbstractSocket *socket;
 
 };
 
