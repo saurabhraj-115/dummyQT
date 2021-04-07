@@ -2,6 +2,7 @@
 #include <myserver.h>
 #include <QTextStream>
 #include <QIODevice>
+#include <QProcess>
 
 MyServer::MyServer(QObject *parent) : QObject(parent)
 {
@@ -41,5 +42,16 @@ void MyServer::onReadyRead(){
     qDebug()<<"Ready read called";
     QByteArray ba;
 	ba =socket->readAll();
-    qDebug()<<ba;
+    QString str = QString::fromUtf8(ba);
+    QProcess proc;
+    QString command = "ls " + str;
+    proc.start("/bin/bash"); 
+    proc.waitForStarted();
+    proc.execute(command);
+    proc.waitForFinished(); 
+    QByteArray output = proc.readAll();
+    qDebug()<<output;
+    proc.close();
+
+
 }

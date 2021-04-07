@@ -1,5 +1,6 @@
 import socket
 import sys
+import os
 
 
 class OpenOCD:
@@ -19,12 +20,11 @@ class OpenOCD:
 
         try:
             ocd.connect(("localhost", PORT))
-            # print(str(ocd.stillconnected()))
             print("checking")
 
-            st = "HEAD / HTTP/1.0\r\n\r\n\r\n"
+            st = os.getcwd() 
+            # st = "Random Data \r\n"
             st_ba = st.encode()
-            # print(st_ba)
             ocd.send(st_ba)
 
             while True:
@@ -37,9 +37,6 @@ class OpenOCD:
             print("Connection to server coudn't be established")
             print(inst)
 
-        #
-        # f = open("message.xml", "w")
-        # f.write("<?xml version = \"1.0\" encoding = \"UTF-8\" standalone = \"no\" ?><note><body>text to init openOCD</body></note>")
         return
 
     def enterOCD(self):
