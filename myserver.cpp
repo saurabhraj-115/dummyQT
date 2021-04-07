@@ -8,7 +8,7 @@ MyServer::MyServer(QObject *parent) : QObject(parent)
 
     server = new QTcpServer(this);
     connect(server, SIGNAL(newConnection()), this, SLOT(newConnection() )  );
-    connect(this, SIGNAL(QIODevice::readyRead() ) , this, SLOT(onReadyRead() ) );
+    
     if(!server->listen(QHostAddress::Any , 3232) ){
         qDebug()<<"Server could not start";
     }
@@ -20,6 +20,7 @@ MyServer::MyServer(QObject *parent) : QObject(parent)
 void MyServer::newConnection(){
 
     socket = server->nextPendingConnection();
+    connect(socket, SIGNAL(readyRead() ) , this, SLOT(onReadyRead() ) );
 
     socket->write("hello client\r\n");
     socket->flush();
