@@ -10,6 +10,11 @@ class OpenOCD:
     def initOCD(self):
         HOST = '127.0.0.1'  #  hostname
         PORT = 3232         #  port
+
+        f = open("message.txt", "r+")
+        f.write("Some random data to be put here")
+        f.close()
+
         try:
             #open ocd server socket object, global variable
             global ocd
@@ -20,11 +25,12 @@ class OpenOCD:
 
         try:
             ocd.connect(("localhost", PORT))
-            print("checking")
+            print("Initiating connection with the server")
 
             st = os.getcwd() 
-            # st = "Random Data \r\n"
+            # st += "/message.txt"
             st_ba = st.encode()
+            # print(st_ba)
             ocd.send(st_ba)
 
             while True:
