@@ -19,6 +19,8 @@ MyServer::MyServer(QObject *parent) : QObject(parent)
     }
 }
 
+//when a new connection comes in for the server
+
 void MyServer::newConnection(){
 
     socket = server->nextPendingConnection();
@@ -38,6 +40,8 @@ void MyServer::newConnection(){
     QString message_content(totol_data);
 
 }
+
+//when there is data in the socket buffer
 
 void MyServer::onReadyRead(){
     qDebug()<<"Ready read called";
